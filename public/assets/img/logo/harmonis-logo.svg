@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 140">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <!-- Outer black ellipse -->
+  <ellipse cx="140" cy="70" rx="136" ry="66" fill="#1a1a1a" filter="url(#shadow)"/>
+  <!-- White border ellipse -->
+  <ellipse cx="140" cy="70" rx="128" ry="58" fill="none" stroke="#ffffff" stroke-width="3"/>
+  <!-- Red fill ellipse -->
+  <ellipse cx="140" cy="70" rx="124" ry="54" fill="#E21A1A"/>
+  <!-- HARMONIS text -->
+  <text x="140" y="68" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="42" font-weight="bold" fill="#1a1a1a" stroke="#ffffff" stroke-width="0.5" letter-spacing="2">HARMONIS</text>
+  <!-- Scissors left -->
+  <text x="62" y="96" text-anchor="middle" font-family="Arial" font-size="16" fill="#ffffff">✂</text>
+  <!-- Barber Shop text -->
+  <text x="140" y="96" text-anchor="middle" font-family="'Brush Script MT', 'Lucida Handwriting', cursive" font-size="22" fill="#ffffff" font-style="italic">Barber Shop</text>
+  <!-- Scissors right -->
+  <text x="218" y="96" text-anchor="middle" font-family="Arial" font-size="16" fill="#ffffff">✂</text>
+</svg>

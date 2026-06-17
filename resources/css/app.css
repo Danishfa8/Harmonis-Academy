@@ -22,16 +22,16 @@
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--color-dark-body);
+    background: #f1f5f9;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #374151;
+    background: #cbd5e1;
     border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #4B5563;
+    background: #94a3b8;
 }
 
 /* Smooth transitions */
@@ -42,91 +42,93 @@
 }
 
 /* Avatar color cycle */
-.avatar-a { background-color: #10B981; }
+.avatar-a { background-color: #DC2626; }
 .avatar-b { background-color: #3B82F6; }
 .avatar-c { background-color: #F59E0B; }
-.avatar-d { background-color: #EF4444; }
+.avatar-d { background-color: #10B981; }
 .avatar-e { background-color: #8B5CF6; }
 .avatar-f { background-color: #EC4899; }
 .avatar-g { background-color: #14B8A6; }
 .avatar-h { background-color: #F97316; }
 
-/* Sidebar active state */
+/* Sidebar active state (Light Theme - Red Accent) */
 .sidebar-link.active {
-    background-color: rgba(16, 185, 129, 0.1);
-    border-left: 3px solid #10B981;
-    color: #10B981;
+    background-color: #FEF2F2;
+    border-left: 3px solid #DC2626;
+    color: #DC2626;
+    font-weight: 600;
 }
 
 .sidebar-link:not(.active):hover {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: #f8fafc;
+    color: #1e293b;
 }
 
-/* Badge styles */
+/* Badge styles (Light Theme) */
 .badge-lunas {
-    background-color: rgba(16, 185, 129, 0.15);
-    color: #10B981;
-    border: 1px solid rgba(16, 185, 129, 0.3);
+    background-color: #DCFCE7;
+    color: #16A34A;
+    border: 1px solid #BBF7D0;
 }
 
 .badge-belum {
-    background-color: rgba(245, 158, 11, 0.15);
-    color: #F59E0B;
-    border: 1px solid rgba(245, 158, 11, 0.3);
+    background-color: #FEF3C7;
+    color: #D97706;
+    border: 1px solid #FDE68A;
 }
 
 .badge-aktif {
-    background-color: rgba(16, 185, 129, 0.15);
-    color: #10B981;
-    border: 1px solid rgba(16, 185, 129, 0.3);
+    background-color: #DCFCE7;
+    color: #16A34A;
+    border: 1px solid #BBF7D0;
 }
 
 .badge-pending {
-    background-color: rgba(245, 158, 11, 0.15);
-    color: #F59E0B;
-    border: 1px solid rgba(245, 158, 11, 0.3);
+    background-color: #FEF3C7;
+    color: #D97706;
+    border: 1px solid #FDE68A;
 }
 
 .badge-selesai {
-    background-color: rgba(59, 130, 246, 0.15);
-    color: #3B82F6;
-    border: 1px solid rgba(59, 130, 246, 0.3);
+    background-color: #DBEAFE;
+    color: #2563EB;
+    border: 1px solid #BFDBFE;
 }
 
 .badge-diverifikasi {
-    background-color: rgba(139, 92, 246, 0.15);
-    color: #8B5CF6;
-    border: 1px solid rgba(139, 92, 246, 0.3);
+    background-color: #EDE9FE;
+    color: #7C3AED;
+    border: 1px solid #DDD6FE;
 }
 
 .badge-valid {
-    background-color: rgba(16, 185, 129, 0.15);
-    color: #10B981;
-    border: 1px solid rgba(16, 185, 129, 0.3);
+    background-color: #DCFCE7;
+    color: #16A34A;
+    border: 1px solid #BBF7D0;
 }
 
 .badge-invalid {
-    background-color: rgba(239, 68, 68, 0.15);
-    color: #EF4444;
-    border: 1px solid rgba(239, 68, 68, 0.3);
+    background-color: #FEE2E2;
+    color: #DC2626;
+    border: 1px solid #FECACA;
 }
 
 /* Card hover effect */
 .card-hover:hover {
-    background-color: var(--color-dark-card-hover);
+    background-color: #f8fafc;
     transform: translateY(-1px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
-/* Stat card gradient backgrounds */
-.stat-card-1 { background: linear-gradient(135deg, #1C2434 0%, #1a3a4a 100%); }
-.stat-card-2 { background: linear-gradient(135deg, #1C2434 0%, #1a2a4a 100%); }
-.stat-card-3 { background: linear-gradient(135deg, #1C2434 0%, #1a4a2a 100%); }
-.stat-card-4 { background: linear-gradient(135deg, #1C2434 0%, #2a1a4a 100%); }
+/* Stat card gradient backgrounds (Light Theme) */
+.stat-card-1 { background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%); }
+.stat-card-2 { background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%); }
+.stat-card-3 { background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%); }
+.stat-card-4 { background: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%); }
 
 /* Table row hover */
 .table-row-hover:hover {
-    background-color: rgba(255, 255, 255, 0.02);
+    background-color: #f8fafc;
 }
 
 /* Fade-in animation */
@@ -147,8 +149,8 @@
 
 /* Pulse glow for active indicators */
 @keyframes pulseGlow {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-    50% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+    50% { box-shadow: 0 0 0 6px rgba(220, 38, 38, 0); }
 }
 
 .pulse-glow {
