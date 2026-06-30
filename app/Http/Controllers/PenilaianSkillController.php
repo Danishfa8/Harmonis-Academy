@@ -34,9 +34,14 @@ class PenilaianSkillController extends Controller
             'coloring' => 'required|integer|min:0|max:100',
             'shaving' => 'required|integer|min:0|max:100',
             'hygiene' => 'required|integer|min:0|max:100',
-            'ulasan_instruktur' => 'nullable|string',
             'tanggal_penilaian' => 'required|date',
         ]);
+
+        $peserta = Peserta::findOrFail($request->peserta_id);
+        if ($peserta->status_bayar !== 'lunas') {
+            return back()->with('error', 'Peserta belum lunas tidak dapat diberi penilaian!');
+        }
+
         PenilaianSkill::create($v);
         return back()->with('success', 'Penilaian skill berhasil ditambahkan!');
     }
@@ -49,7 +54,6 @@ class PenilaianSkillController extends Controller
             'coloring' => 'required|integer|min:0|max:100',
             'shaving' => 'required|integer|min:0|max:100',
             'hygiene' => 'required|integer|min:0|max:100',
-            'ulasan_instruktur' => 'nullable|string',
             'tanggal_penilaian' => 'required|date',
         ]);
         $penilaianSkill->update($v);

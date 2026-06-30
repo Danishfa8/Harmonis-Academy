@@ -38,7 +38,7 @@
                         <div class="flex h-10 w-10 items-center justify-center rounded-full {{ $bgColor }} text-sm font-bold text-white">{{ $n->peserta->initials ?? '?' }}</div>
                         <div>
                             <h4 class="font-semibold text-slate-800">{{ $n->peserta->nama ?? '-' }}</h4>
-                            <p class="text-xs text-slate-500">
+                            <p class="text-xs text-slate-505">
                                 Rata-rata: <span class="font-bold {{ $n->rata_rata >= 75 ? 'text-emerald-600' : ($n->rata_rata >= 60 ? 'text-blue-600' : ($n->rata_rata >= 50 ? 'text-amber-600' : 'text-red-600')) }}">{{ $n->rata_rata }}</span>
                                 <span class="font-bold text-slate-400">({{ $n->grade }})</span>
                             </p>
@@ -62,7 +62,7 @@
                         @endphp
                         <div>
                             <div class="flex items-center justify-between mb-1">
-                                <span class="text-xs font-medium text-slate-600 capitalize">{{ ucfirst($skill) }}</span>
+                                <span class="text-xs font-medium text-slate-650 capitalize">{{ $skill }}</span>
                                 <span class="text-xs font-bold text-slate-700">{{ $val }}</span>
                             </div>
                             <div class="h-2 w-full rounded-full bg-slate-100">
@@ -71,10 +71,6 @@
                         </div>
                     @endforeach
                 </div>
-
-                @if($n->ulasan_instruktur)
-                    <p class="mt-4 text-xs italic text-slate-500">"{{ $n->ulasan_instruktur }}"</p>
-                @endif
             </div>
         @empty
             <div class="col-span-3 rounded-2xl border border-slate-200 bg-white px-5 py-12 text-center text-slate-400 shadow-sm">
@@ -106,11 +102,11 @@
         <form action="{{ route('penilaian-skill.store') }}" method="POST" class="space-y-5">
             @csrf
             <div>
-                <label class="mb-1.5 block text-sm font-medium text-slate-600">Peserta</label>
-                <select name="peserta_id" required class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors">
+                <label class="mb-1.5 block text-sm font-medium text-slate-655">Peserta</label>
+                <select name="peserta_id" required @change="verifyPesertaPayment($event)" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors">
                     <option value="">— Pilih Peserta —</option>
                     @foreach($pesertaTanpaNilai as $p)
-                        <option value="{{ $p->id }}">{{ $p->nama }} ({{ $p->nik }})</option>
+                        <option value="{{ $p->id }}" data-status="{{ $p->status_bayar }}">{{ $p->nama }} — [{{ $p->status_bayar === 'lunas' ? 'Lunas' : 'Belum Lunas' }}]</option>
                     @endforeach
                 </select>
             </div>
@@ -129,12 +125,8 @@
                 <label class="mb-1.5 block text-sm font-medium text-slate-600">Tanggal Penilaian</label>
                 <input type="date" name="tanggal_penilaian" value="{{ date('Y-m-d') }}" required class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors">
             </div>
-            <div>
-                <label class="mb-1.5 block text-sm font-medium text-slate-600">Ulasan Instruktur</label>
-                <textarea name="ulasan_instruktur" rows="3" placeholder="Catatan penilaian..." class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 placeholder-slate-400 outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors resize-none"></textarea>
-            </div>
             <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-200">
-                <button type="button" @click="$store.penilaianModal.close()" class="rounded-lg border border-slate-300 bg-transparent px-6 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-800 transition-colors">Batal</button>
+                <button type="button" @click="$store.penilaianModal.close()" class="rounded-lg border border-slate-300 bg-transparent px-6 py-2.5 text-sm font-medium text-slate-655 hover:bg-slate-100 hover:text-slate-800 transition-colors">Batal</button>
                 <button type="submit" class="inline-flex items-center gap-2 rounded-lg bg-red-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-red-600/20 hover:bg-red-700 transition-colors">
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                     Tambah
@@ -174,7 +166,7 @@
                 <div class="grid grid-cols-2 gap-3 sm:grid-cols-5">
                     @foreach(['cutting','styling','coloring','shaving','hygiene'] as $skill)
                     <div>
-                        <label class="mb-1 block text-xs font-medium text-slate-500 capitalize">{{ $skill }}</label>
+                        <label class="mb-1 block text-xs font-medium text-slate-505 capitalize">{{ $skill }}</label>
                         <input type="number" name="{{ $skill }}" x-model="$store.editPenilaian.form.{{ $skill }}" min="0" max="100" required class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 text-center outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors">
                     </div>
                     @endforeach
@@ -183,10 +175,6 @@
             <div>
                 <label class="mb-1.5 block text-sm font-medium text-slate-600">Tanggal Penilaian</label>
                 <input type="date" name="tanggal_penilaian" x-model="$store.editPenilaian.form.tanggal_penilaian" required class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors">
-            </div>
-            <div>
-                <label class="mb-1.5 block text-sm font-medium text-slate-600">Ulasan Instruktur</label>
-                <textarea name="ulasan_instruktur" x-model="$store.editPenilaian.form.ulasan_instruktur" rows="3" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-800 placeholder-slate-400 outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-colors resize-none"></textarea>
             </div>
             <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-200">
                 <button type="button" @click="$store.editPenilaian.close()" class="rounded-lg border border-slate-300 bg-transparent px-6 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-800 transition-colors">Batal</button>
@@ -209,7 +197,7 @@ document.addEventListener('alpine:init', () => {
     });
     Alpine.store('editPenilaian', {
         show: false, formAction: '', pesertaNama: '',
-        form: { cutting:0, styling:0, coloring:0, shaving:0, hygiene:0, ulasan_instruktur:'', tanggal_penilaian:'' },
+        form: { cutting:0, styling:0, coloring:0, shaving:0, hygiene:0, tanggal_penilaian:'' },
         open() { this.show = true; document.body.classList.add('overflow-hidden'); },
         close() { this.show = false; document.body.classList.remove('overflow-hidden'); },
     });
@@ -225,10 +213,27 @@ function penilaianPage() {
             s.form = {
                 cutting: n.cutting, styling: n.styling, coloring: n.coloring,
                 shaving: n.shaving, hygiene: n.hygiene,
-                ulasan_instruktur: n.ulasan_instruktur || '',
                 tanggal_penilaian: n.tanggal_penilaian?.split('T')[0] || ''
             };
             s.open();
+        },
+        verifyPesertaPayment(e) {
+            const select = e.target;
+            const selectedOption = select.options[select.selectedIndex];
+            if (selectedOption) {
+                const status = selectedOption.getAttribute('data-status');
+                if (status && status !== 'lunas') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Akses Ditolak',
+                        text: 'Peserta belum lunas tidak dapat diberi penilaian!',
+                        background: '#ffffff',
+                        color: '#1e293b',
+                        confirmButtonColor: '#DC2626'
+                    });
+                    select.value = ''; // Reset select
+                }
+            }
         },
         hapus(id) {
             Swal.fire({ title:'Hapus penilaian?', text:'Data penilaian ini akan dihapus.', icon:'warning', showCancelButton:true, confirmButtonColor:'#EF4444', cancelButtonColor:'#64748B', confirmButtonText:'Ya, Hapus!', cancelButtonText:'Batal', background:'#ffffff', color:'#1e293b' }).then(r => {
